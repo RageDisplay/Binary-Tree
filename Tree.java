@@ -4,20 +4,23 @@ import java.util.Stack;
 
 class Tree {
     private Node rootNode; // корневой узел
-
     public Tree() { // Пустое дерево
         rootNode = null;
     }
-
+    
     public Node findNodeByValue(int value) { // поиск узла по значению
         Node currentNode = rootNode; // начинаем поиск с корневого узла
         while (currentNode.getValue() != value) { // поиск покуда не будет найден элемент или не будут перебраны все
-            if (value < currentNode.getValue()) { // движение влево
+            if (value < currentNode.getValue()) 
+            { // движение влево
                 currentNode = currentNode.getLeftChild();
-            } else { // движение вправо
+            } 
+            else 
+            { // движение вправо
                 currentNode = currentNode.getRightChild();
             }
-            if (currentNode == null) { // если потомка нет,
+            if (currentNode == null) 
+            { // если потомка нет,
                 return null; // возвращаем null
             }
         }
@@ -29,7 +32,9 @@ class Tree {
         newNode.setValue(value); // вставка данных
         if (rootNode == null) { // если корневой узел не существует
             rootNode = newNode;// то новый элемент и есть корневой узел
-        } else { // корневой узел занят
+        } 
+        else 
+        { // корневой узел занят
             Node currentNode = rootNode; // начинаем с корневого узла
             Node parentNode;
             while (true) // мы имеем внутренний выход из цикла
@@ -37,13 +42,17 @@ class Tree {
                 parentNode = currentNode;
                 if (value == currentNode.getValue()) { // если такой элемент в дереве уже есть, не сохраняем его
                     return; // просто выходим из метода
-                } else if (value < currentNode.getValue()) { // движение влево?
+                } 
+                else if (value < currentNode.getValue()) 
+                { // движение влево?
                     currentNode = currentNode.getLeftChild();
                     if (currentNode == null) { // если был достигнут конец цепочки,
                         parentNode.setLeftChild(newNode); // то вставить слева и выйти из методы
                         return;
                     }
-                } else { // Или направо?
+                } 
+                else 
+                { // Или направо?
                     currentNode = currentNode.getRightChild();
                     if (currentNode == null) { // если был достигнут конец цепочки,
                         parentNode.setRightChild(newNode); // то вставить справа
@@ -80,21 +89,27 @@ class Tree {
                 parentNode.setLeftChild(null); // если нет - узел отсоединяется, от родителя
             else
                 parentNode.setRightChild(null);
-        } else if (currentNode.getRightChild() == null) { // узел заменяется левым поддеревом, если правого потомка нет
+        } 
+        else if (currentNode.getRightChild() == null) 
+        { // узел заменяется левым поддеревом, если правого потомка нет
             if (currentNode == rootNode)
                 rootNode = currentNode.getLeftChild();
             else if (isLeftChild)
                 parentNode.setLeftChild(currentNode.getLeftChild());
             else
                 parentNode.setRightChild(currentNode.getLeftChild());
-        } else if (currentNode.getLeftChild() == null) { // узел заменяется правым поддеревом, если левого потомка нет
+        } 
+        else if (currentNode.getLeftChild() == null) 
+        { // узел заменяется правым поддеревом, если левого потомка нет
             if (currentNode == rootNode)
                 rootNode = currentNode.getRightChild();
             else if (isLeftChild)
                 parentNode.setLeftChild(currentNode.getRightChild());
             else
                 parentNode.setRightChild(currentNode.getRightChild());
-        } else { // если есть два потомка, узел заменяется преемником
+        } 
+        else 
+        { // если есть два потомка, узел заменяется преемником
             Node heir = receiveHeir(currentNode);// поиск преемника для удаляемого узла
             if (currentNode == rootNode)
                 rootNode = heir;
@@ -105,7 +120,30 @@ class Tree {
         }
         return true; // элемент успешно удалён
     }
-
+    
+    public void max()
+    {
+        if (rootNode == null)
+        {
+            System.out.println("NULL NODE");
+        }
+        else
+        {
+            Node currentNode = rootNode;
+            Node parentNode;
+            while(true)
+            {
+                parentNode = currentNode;
+                currentNode = currentNode.getRightChild();
+                if (currentNode == null)
+                {
+                    System.out.print(parentNode.getValue());
+                    return;
+                }
+            }
+        }
+    }
+    
     // метод возвращает узел со следующим значением после передаваемого аргументом.
     // для этого он сначала переходим к правому потомку, а затем
     // отслеживаем цепочку левых потомков этого узла.
@@ -150,7 +188,9 @@ class Tree {
                     if (temp.getLeftChild() != null ||
                             temp.getRightChild() != null)
                         isRowEmpty = false;
-                } else {
+                } 
+                else 
+                {
                     System.out.print("__");// - если элемент пустой
                     localStack.push(null);
                     localStack.push(null);
